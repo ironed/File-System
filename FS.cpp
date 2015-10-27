@@ -515,58 +515,7 @@ int main()
 		write_block(j,dash);
 	ldisc[0][0]='1';
 	create_directory();
-	/*create("foo1",4);
-	create("foo2",4);
-	create("foo3",4);
-	create("foo4",4);
-	create("foo5",4);
-	create("foo6",4);
-	create("foo7",4);
-	create("foo8",4);
-	create("foo9",4);
-	create("fo10",4);
-	create("fo11",4);
-	create("fo12",4);
-	create("fo13",4);
-	create("fo14",4);
-	create("fo15",4);
-	create("fo16",4);
-	create("fo17",4);
-	create("fo18",4);
-	create("fo19",4);
-	create("fo20",4);
-	create("fo21",4);
-	create("fo33",4);
-	create("fo35",4);
-	create("bar",3);
-	del("foo1",4);
-	//create("foo2",4);
-	del("fo12",4);
-	//create("foo3",4);
-	create("fo32",4);
-	create("fo31",4);
-	open("foo9",4);
-	write(1,"I_AM_AWESOME_BITCHES!!!I_AM_AWESOME_BITCHES!!!I_AM_AWESOME_BITCHES!!!",69);
-	write(1,"Tum_bhi_ho_na_awesome?",22);
-	//close(1);
-	//create("fo35",4);
-	for(int i=0;i<=40;i++)
-	{
-		cout<<i<<" ";
-		for(int j=0;j<64;j++)
-			printf("%c",ldisc[i][j]);
-		cout<<endl;
-	}
-	open("foo9",4);
-	read(1,4);
-	lseek(1,5);
-	read(1,7);
-	lseek(1,13);
-	read(1,10);
-	lseek(1,69);
-	read(1,27);
-	//cout<<get_descriptor("fo35",4,0)<<endl;
-	//directory();*/
+
 	while(1)
 	{
 		char cmd[3];
