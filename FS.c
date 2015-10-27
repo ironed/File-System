@@ -1,24 +1,9 @@
-#include <iostream>
-#include <string>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
-#define no_of_files 23
 using namespace std;
 
-char *check_substr(char *buffer,char *name,int name_len)
-{
-	for(int i=0;i<=64-name_len;i++)
-	{
-		int j;
-		for(j=0;j<name_len;j++)
-			if(buffer[i+j]!=name[j])
-				break;
-		if(j==name_len)
-			return buffer+i;
-	}
-	return NULL;
-}
+char ldisc[64][64];/*this array represents the logical disc, only reading and writing a block at a time is permitted*/
 
 struct OFT
 {
@@ -26,11 +11,9 @@ struct OFT
 	int current_pos;
 	char buff[64];
 	int file_size;
-}OFT[4];
+}OFT[4];/*Open file table. Allows only four files to be opened at a time*/
 
-
-char ldisc[64][64];
-void read_block(int i, char *p)
+void read_block(int i, char *p)/*Reads contents of block number i ldisc to p*/
 {
 	if(i>63||i<0)
 	{
@@ -40,6 +23,37 @@ void read_block(int i, char *p)
 	for(int j=0;j<64;j++)
 		p[j]=ldisc[i][j];
 }
+
+void write_block(int i, char *p)/*Writes contents of p to block number i of ldisc*/
+{
+	if(i>63||i<0)
+	{
+		cout<<"I/O error!"<<endl;
+		return;
+	}
+	for(int j=0;j<64;j++)
+		ldisc[i][j]=p[j];
+}
+
+char *check_substr(char *buffer,char *file_name,int name_len)/*returns true if file_name is present in buffer*/
+{
+	for(int i=0;i<=64-name_len;i++)
+	{
+		int j;
+		for(j=0;j<name_len;j++)
+			if(buffer[i+j]!=file_name[j])
+				break;
+		if(j==name_len)
+			return buffer+i;
+	}
+	return NULL;
+}
+
+
+
+
+
+
 int to_int(char *buffer,int b_pos)
 {
 	int num=buffer[b_pos]<<24;
@@ -58,17 +72,6 @@ char *to_char(char *buffer,int pos,int num)
 	buffer[pos++]=(num>>0 )&0xff;
 	return buffer;
 }
-void write_block(int i, char *p)
-{
-	if(i>63||i<0)
-	{
-		cout<<"I/O error!"<<endl;
-		return;
-	}
-	for(int j=0;j<64;j++)
-		ldisc[i][j]=p[j];
-}
-
 int get_free_descriptor()//correct one
 {
 	char buffer[64];
@@ -85,7 +88,7 @@ int get_free_descriptor()//correct one
 	}
 	return -1;
 }
-int get_free_block()//correct one
+int get_free_block()
 {
 	char bmap[64];
 	read_block(0,bmap);
